@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연산 퀴즈</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <div id="questions-attempted">문제 푼 횟수: 0/100</div>
+        <div class="quiz-container">
+            <div id="question" class="question"></div>
+            <div id="result"></div>
+        </div>
+
+        <div class="button-container">
+            <button onclick="scrollButtons('left')">〈</button>
+            <button class="button-style" id="addition-button" onclick="changeQuestionType('addition')">덧셈</button>
+            <button class="button-style" id="single-addition-button" onclick="changeQuestionType('singleAddition')">한자리덧셈</button>
+            <button class="button-style" id="complement-button" onclick="changeQuestionType('complement')">100보수</button>
+            <button class="button-style" id="subtraction-button" onclick="changeQuestionType('subtraction')">뺄셈</button>
+            <button class="button-style" id="addition-comparison-button" onclick="changeQuestionType('addition-comparison')">덧셈비교</button>
+            <button class="button-style" id="subtraction-comparison-button" onclick="changeQuestionType('subtractionComparison')">뺄셈비교</button>
+            <button class="button-style" id="tenMultiple-button" onclick="changeQuestionType('tenMultiple')">십구구단</button>
+            <button class="button-style" id="tensPlaceMultiplication-button" onclick="changeQuestionType('tensPlaceMultiplication')">십동일보</button>
+            <button class="button-style" id="unitsPlaceMultiplication-button" onclick="changeQuestionType('unitsPlaceMultiplication')">십보일동</button>
+            <button class="button-style" id="multiplication-button" onclick="changeQuestionType('multiplication')">곱셈</button>
+            <button class="button-style" id="multipleChoice-button" onclick="changeQuestionType('multipleChoice')">배수</button>
+            <button class="button-style" id="division-button" onclick="changeQuestionType('division')">나눗셈</button>
+            <button onclick="scrollButtons('right')">〉</button>
+        </div>
+
+        <div class="calc-container">
+            <input type="text" id="answer" class="answer">
+            <!-- 숫자 키패드 추가 -->
+            <div class="keypad">
+                <button onclick="appendToAnswer('<')"><</button>
+                <button onclick="appendToAnswer('=')">=</button>
+                <button onclick="appendToAnswer('>')">></button>
+                <button class="backspace-button" onclick="removeLastDigit()">←</button>
+                <button class="clear-button" onclick="clearAnswer()">C</button>
+                <button class="check-answer-button" onclick="checkAnswer()">정답 확인</button>
+                <button onclick="appendToAnswer(1)">1</button>
+                <button onclick="appendToAnswer(2)">2</button>
+                <button onclick="appendToAnswer(3)">3</button>
+                <button onclick="appendToAnswer(4)">4</button>
+                <button onclick="appendToAnswer(5)">5</button>
+                <button onclick="appendToAnswer(6)">6</button>
+                <button onclick="appendToAnswer(7)">7</button>
+                <button onclick="appendToAnswer(8)">8</button>
+                <button onclick="appendToAnswer(9)">9</button>
+                <button onclick="clearResult()"></button>
+                <button onclick="appendToAnswer(0)">0</button>
+                <button onclick="clearResult()"></button>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
