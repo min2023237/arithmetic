@@ -31,6 +31,7 @@
             <button class="button-style" id="multiplication-button" onclick="changeQuestionType('multiplication')">곱셈</button>
             <button class="button-style" id="multipleChoice-button" onclick="changeQuestionType('multipleChoice')">배수</button>
             <button class="button-style" id="division-button" onclick="changeQuestionType('division')">나눗셈</button>
+            <button class="button-style" id="fraction-to-percentage-button" onclick="changeQuestionType('fractionToPercentage')">분수값</button>
             <button onclick="scrollButtons('right')">〉</button>
         </div>
 
@@ -53,10 +54,10 @@
                 <button onclick="appendToAnswer(7)">7</button>
                 <button onclick="appendToAnswer(8)">8</button>
                 <button onclick="appendToAnswer(9)">9</button>
-                <button onclick="clearResult()"></button>
+                <button onclick="appendToAnswer('.')">.</button>
                 <button onclick="appendToAnswer(0)">0</button>
-                <button onclick="clearResult()"></button>
-                
+                <button onclick="nextQuestion()">next</button>
+                <div id="hidden-answer" style="color: white;"></div>
             </div>
         </div>
     </div>

@@ -41,7 +41,12 @@ function generateQuestion() {
         case 'division':
             generateDivisionQuestion();
             break;
+        case 'fractionToPercentage':
+            generateFractionToPercentageQuestion();
+            break;
     }
+    // 업데이트된 정답을 hidden-answer 요소에 설정
+    document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
 }
 
 function generateAdditionQuestion() {
@@ -281,6 +286,19 @@ function generateUnitsPlaceMultiplicationQuestion() {
     document.getElementById('result').innerText = '';
 }
 
+function generateFractionToPercentageQuestion() {
+    const denominator = Math.floor(Math.random() * 20) + 1; // 1부터 20까지의 수
+    const numerator = Math.floor(Math.random() * denominator) + 1; // 1부터 20까지의 수, 분자와 독립적으로 설정
+    const answer = (numerator / denominator * 100).toFixed(2); // 소수점 두 자리까지의 퍼센트로 변환
+
+    currentQuestion = { numerator, denominator, answer };
+    document.getElementById('question').innerText = `${numerator} / ${denominator} = ? %`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
+
 
 
 
@@ -303,7 +321,9 @@ function checkAnswer() {
     const resultElement = document.getElementById('result');
     let isCorrect = false; // 정답 여부 초기화
 
-    if (questionType === 'addition-comparison' || questionType ==='subtractionComparison') {
+    if (questionType === 'fractionToPercentage') {
+        isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
+    } else if (questionType === 'addition-comparison' || questionType ==='subtractionComparison') {
         // 'addition-comparison' 유형은 문자열로 비교
         isCorrect = (userAnswer === currentQuestion.answer);
     } else {
@@ -353,7 +373,7 @@ function removeLastDigit() {
 
 
 // 스크롤 버튼
-var buttonIds = ['addition-button','single-addition-button', 'complement-button', 'subtraction-button', 'addition-comparison-button', 'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button', 'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button'];
+var buttonIds = ['addition-button','single-addition-button', 'complement-button', 'subtraction-button', 'addition-comparison-button', 'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button', 'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button','fraction-to-percentage-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
@@ -378,6 +398,14 @@ function updateButtonVisibility() {
         }
     }
 }
+
+//다음 문제로 이동
+function nextQuestion() {
+    generateQuestion(); // 새로운 문제 생성
+    document.getElementById('answer').value = ''; // 답 입력 필드 초기화
+    document.getElementById('result').innerText = ''; // 결과 텍스트 초기화
+}
+
 
 // 페이지 로드 시 초기 버튼 상태 설정
 window.onload = function() {
