@@ -332,7 +332,7 @@ function generateMultiplicationQuestionKorean() {
 }
 
 const valuesA = [20, 40, 60, 80, 100, 120, 140, 160, 180];
-const percentagesB = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95];
+const percentagesB = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95];
 
 function generatePercentageQuestion() {
     const A = valuesA[Math.floor(Math.random() * valuesA.length)];
