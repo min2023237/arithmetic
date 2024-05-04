@@ -2,6 +2,22 @@ let currentQuestion;
 let questionType = 'addition'; // 초기 연산 유형 설정
 let questionsAttempted = 0; // 문제를 푼 횟수
 
+const multiplicationQuestions = {
+    "십*십": "백",
+    "백*십": "천",
+    "천*십": "만",
+    "만*만": "억",
+    "십*백": "천",
+    "백*백": "만",
+    "천*백": "십만",
+    "만*억": "조",
+    "십*천": "만",
+    "백*천": "십만",
+    "천*천": "백만",
+    "억*억": "경"
+};
+
+
 
 function generateQuestion() {
     switch (questionType) {
@@ -44,6 +60,12 @@ function generateQuestion() {
         case 'fractionToPercentage':
             generateFractionToPercentageQuestion();
             break;
+        case 'koreanMultiplication':
+            generateMultiplicationQuestionKorean();
+            break;
+        case 'percentageQuestion':
+            generatePercentageQuestion();
+        break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -298,6 +320,33 @@ function generateFractionToPercentageQuestion() {
     isCorrect = false;
 }
 
+function generateMultiplicationQuestionKorean() {
+    const keys = Object.keys(multiplicationQuestions);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    currentQuestion = { question: randomKey, answer: multiplicationQuestions[randomKey] };
+
+    document.getElementById('question').innerText = `${randomKey} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
+const valuesA = [20, 40, 60, 80, 100, 120, 140, 160, 180];
+const percentagesB = [5, 15, 25, 35, 45, 55, 65, 75, 85, 95];
+
+function generatePercentageQuestion() {
+    const A = valuesA[Math.floor(Math.random() * valuesA.length)];
+    const B = percentagesB[Math.floor(Math.random() * percentagesB.length)];
+    const answer = A * (B / 100); // 계산 결과
+
+    currentQuestion = { question: `A의 B는? (A=${A}, B=${B}%)`, answer: answer.toFixed(2) };
+
+    document.getElementById('question').innerText = `${A}의 ${B}%는?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
 
 
 
@@ -321,14 +370,20 @@ function checkAnswer() {
     const resultElement = document.getElementById('result');
     let isCorrect = false; // 정답 여부 초기화
 
-    if (questionType === 'fractionToPercentage') {
-        isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
-    } else if (questionType === 'addition-comparison' || questionType ==='subtractionComparison') {
-        // 'addition-comparison' 유형은 문자열로 비교
-        isCorrect = (userAnswer === currentQuestion.answer);
-    } else {
-        // 나머지 유형은 숫자로 변환하여 비교
-        isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
+    switch(questionType) {
+        case 'fractionToPercentage':
+            isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
+            break;
+        case 'addition-comparison':
+        case 'subtractionComparison':
+        case 'koreanMultiplication':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'percentageQuestion':
+            isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
+            break;
+        default:
+            isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
     }
 
     if (isCorrect) {
@@ -373,7 +428,12 @@ function removeLastDigit() {
 
 
 // 스크롤 버튼
-var buttonIds = ['addition-button','single-addition-button', 'complement-button', 'subtraction-button', 'addition-comparison-button', 'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button', 'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button','fraction-to-percentage-button'];
+var buttonIds = ['addition-button','single-addition-button', 
+'complement-button', 'subtraction-button', 'addition-comparison-button',
+ 'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button',
+  'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button',
+  'fraction-to-percentage-button','korean-multiplication-button',
+'percentage-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
