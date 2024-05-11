@@ -394,7 +394,7 @@ function findLargestMultiple(num) {
 }
 
 function generatePrimeOrMultipleQuestion() {
-    const num = Math.floor(Math.random() * 100) + 2; // 2부터 101까지의 수
+    const num = Math.floor(Math.random() * 1000) + 2; // 2부터 101까지의 수
     if (isPrime(num)) {
         currentQuestion = { question: `${num}은(는) 소수?`, answer: "o" };
         document.getElementById('question').innerText = `${num}은(는) 소수? o 또는 x`;
