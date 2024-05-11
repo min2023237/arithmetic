@@ -456,7 +456,7 @@ var buttonIds = ['addition-button','single-addition-button',
  'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button',
   'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button',
   'fraction-to-percentage-button','korean-multiplication-button',
-'percentage-question-button'];
+'percentage-question-button','prime-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
