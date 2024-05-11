@@ -371,6 +371,40 @@ function generatePrimeQuestion() {
     isCorrect = false;
 }
 
+function findLargestMultiple(num) {
+    const multiples = [2, 3, 4, 5, 6, 7, 9]; // 검사할 배수들
+    let largestMultiple = null;
+
+    for (let i = multiples.length - 1; i >= 0; i--) {
+        if (num % multiples[i] === 0) {
+            if (multiples[i] === 6) {
+                if (num % 2 === 0 || num % 3 === 0) {
+                    return 6;
+                }
+            } else {
+                return multiples[i];
+            }
+        }
+    }
+
+    return largestMultiple;
+}
+
+function generatePrimeOrMultipleQuestion() {
+    const num = Math.floor(Math.random() * 100) + 2; // 2부터 101까지의 수
+    if (isPrime(num)) {
+        currentQuestion = { question: `${num}은(는) 소수?`, answer: "o" };
+        document.getElementById('question').innerText = `${num}은(는) 소수? o 또는 x`;
+    } else {
+        const largestMultiple = findLargestMultiple(num);
+        currentQuestion = { question: `${num}은(는) 어떤 수의 최대 배수?`, answer: largestMultiple.toString() };
+        document.getElementById('question').innerText = `${num}은(는) 어떤 수의 최대 배수? (2,3,4,5,6,7,9 중 선택)`;
+    }
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
 // 문제 표시 함수
 // function displayQuestion(a, b, operator) {
 //     // ... 기존 displayQuestion 함수 내용 ...
@@ -403,6 +437,9 @@ function checkAnswer() {
             isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
             break;
         case 'primeQuestion':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'primeOrMultiple':
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
         default:
@@ -456,7 +493,7 @@ var buttonIds = ['addition-button','single-addition-button',
  'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button',
   'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button',
   'fraction-to-percentage-button','korean-multiplication-button',
-'percentage-question-button','prime-question-button'];
+'percentage-question-button','prime-question-button','prime-or-multiple-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
