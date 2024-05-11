@@ -68,6 +68,9 @@ function generateQuestion() {
         case 'primeQuestion':
             generatePrimeQuestion();
         break;
+        case 'primeOrMultiple':
+            generatePrimeOrMultipleQuestion();
+        break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
