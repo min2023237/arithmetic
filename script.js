@@ -65,6 +65,8 @@ function generateQuestion() {
             break;
         case 'percentageQuestion':
             generatePercentageQuestion();
+        case 'primeQuestion':
+            generatePrimeQuestion();
         break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
@@ -347,9 +349,27 @@ function generatePercentageQuestion() {
     isCorrect = false;
 }
 
+function isPrime(num) {
+    if (num <= 1) return false;
+    if (num <= 3) return true;
+    if (num % 2 === 0 || num % 3 === 0) return false;
 
+    for (let i = 5; i * i <= num; i += 6) {
+        if (num % i === 0 || num % (i + 2) === 0) return false;
+    }
+    return true;
+}
 
+function generatePrimeQuestion() {
+    const num = Math.floor(Math.random() * 100) + 2; // 2부터 101까지의 수
+    const isNumPrime = isPrime(num) ? "o" : "x";
+    currentQuestion = { question: `${num}은(는) 소수?`, answer: isNumPrime };
 
+    document.getElementById('question').innerText = `${num}은(는) 소수? o 또는 x`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
 
 // 문제 표시 함수
 // function displayQuestion(a, b, operator) {
@@ -366,7 +386,7 @@ function changeQuestionType(newType) {
 }
 
 function checkAnswer() {
-    const userAnswer = document.getElementById('answer').value.trim(); // 공백 제거
+    const userAnswer = document.getElementById('answer').value.trim().toLowerCase(); // 공백 제거
     const resultElement = document.getElementById('result');
     let isCorrect = false; // 정답 여부 초기화
 
@@ -381,6 +401,9 @@ function checkAnswer() {
             break;
         case 'percentageQuestion':
             isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
+            break;
+        case 'primeQuestion':
+            isCorrect = (userAnswer === currentQuestion.answer);
             break;
         default:
             isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
