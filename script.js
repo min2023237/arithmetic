@@ -2,22 +2,6 @@ let currentQuestion;
 let questionType = 'addition'; // 초기 연산 유형 설정
 let questionsAttempted = 0; // 문제를 푼 횟수
 
-const multiplicationQuestions = {
-    "십*십": "백",
-    "백*십": "천",
-    "천*십": "만",
-    "만*만": "억",
-    "십*백": "천",
-    "백*백": "만",
-    "천*백": "십만",
-    "만*억": "조",
-    "십*천": "만",
-    "백*천": "십만",
-    "천*천": "백만",
-    "억*억": "경"
-};
-
-
 
 function generateQuestion() {
     switch (questionType) {
@@ -65,12 +49,16 @@ function generateQuestion() {
             break;
         case 'percentageQuestion':
             generatePercentageQuestion();
+            break;
         case 'primeQuestion':
             generatePrimeQuestion();
-        break;
+            break;
         case 'primeOrMultiple':
             generatePrimeOrMultipleQuestion();
-        break;
+            break;
+        case 'mathQuestion':
+            generateMathQuestion();
+            break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -325,6 +313,21 @@ function generateFractionToPercentageQuestion() {
     isCorrect = false;
 }
 
+const multiplicationQuestions = {
+    "십*십": "백",
+    "백*십": "천",
+    "천*십": "만",
+    "만*만": "억",
+    "십*백": "천",
+    "백*백": "만",
+    "천*백": "십만",
+    "만*억": "조",
+    "십*천": "만",
+    "백*천": "십만",
+    "천*천": "백만",
+    "억*억": "경"
+};
+
 function generateMultiplicationQuestionKorean() {
     const keys = Object.keys(multiplicationQuestions);
     const randomKey = keys[Math.floor(Math.random() * keys.length)];
@@ -397,21 +400,50 @@ function generatePrimeOrMultipleQuestion() {
     const num = Math.floor(Math.random() * 1000) + 2; // 2부터 101까지의 수
     if (isPrime(num)) {
         currentQuestion = { question: `${num}은(는) 소수?`, answer: "o" };
-        document.getElementById('question').innerText = `${num}은(는) 소수? o 또는 x`;
+        document.getElementById('question').innerText = `${num}은(는) 소수? 소수가 아니라면 어떤 수의 최대 배수?`;
     } else {
         const largestMultiple = findLargestMultiple(num);
         currentQuestion = { question: `${num}은(는) 어떤 수의 최대 배수?`, answer: largestMultiple.toString() };
-        document.getElementById('question').innerText = `${num}은(는) 어떤 수의 최대 배수? (2,3,4,5,6,7,9 중 선택)`;
+        document.getElementById('question').innerText = `${num}은(는) 소수? 소수가 아니라면 어떤 수의 최대 배수?`;
     }
     document.getElementById('answer').value = '';
     document.getElementById('result').innerText = '';
     isCorrect = false;
 }
 
-// 문제 표시 함수
-// function displayQuestion(a, b, operator) {
-//     // ... 기존 displayQuestion 함수 내용 ...
-// }
+const mathQuestions = [
+    { question: "11 * 11", answer: "121" },
+    { question: "12 * 12", answer: "144" },
+    { question: "13 * 13", answer: "169" },
+    { question: "14 * 14", answer: "196" },
+    { question: "15 * 15", answer: "225" },
+    { question: "16 * 16", answer: "256" },
+    { question: "17 * 17", answer: "289" },
+    { question: "18 * 18", answer: "324" },
+    { question: "19 * 19", answer: "361" },
+    { question: "20 * 20", answer: "400" },
+    { question: "4 * 25", answer: "100" },
+    { question: "5 * 20", answer: "100" },
+    { question: "2 * 1.5", answer: "3" },
+    { question: "25 * 25", answer: "625" },
+    { question: "2^10", answer: "1024" },
+    { question: "x * 5", answer: " 10x / 2" },
+    { question: "(x+a)(x-a)", answer: "x^2 - a^2" },
+    { question: "75 * 4", answer: "300" }
+];
+
+function generateMathQuestion() {
+    const randomIndex = Math.floor(Math.random() * mathQuestions.length);
+    const selectedQuestion = mathQuestions[randomIndex];
+
+    currentQuestion = selectedQuestion;
+    document.getElementById('question').innerText = `${selectedQuestion.question} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
+
 
 function changeQuestionType(newType) {
     if (questionType !== newType) {
@@ -444,6 +476,9 @@ function checkAnswer() {
             break;
         case 'primeOrMultiple':
             isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'mathQuestion':
+            isCorrect = (userAnswer === currentQuestion.answer.replace(/\s+/g, ''));
             break;
         default:
             isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
@@ -496,7 +531,7 @@ var buttonIds = ['addition-button','single-addition-button',
  'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button',
   'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button',
   'fraction-to-percentage-button','korean-multiplication-button',
-'percentage-question-button','prime-question-button','prime-or-multiple-question-button'];
+'percentage-question-button','prime-question-button','prime-or-multiple-question-button','math-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
