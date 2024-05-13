@@ -59,6 +59,12 @@ function generateQuestion() {
         case 'mathQuestion':
             generateMathQuestion();
             break;
+        case 'multiplicationWithFiveEnd':
+            generateMultiplicationWithFiveEndQuestion();
+            break;
+        case 'twelveToNineteenMultiplication':
+            generateTwelveToNineteenMultiplicationQuestion();
+            break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -443,6 +449,35 @@ function generateMathQuestion() {
     isCorrect = false;
 }
 
+function generateMultiplicationWithFiveEndQuestion() {
+    let num1 = Math.floor(Math.random() * 100) + 1; // 1부터 100까지의 수
+    let num2 = Math.floor(Math.random() * 100) + 1; // 1부터 100까지의 수
+
+    // 적어도 하나의 숫자가 5로 끝나도록 조정
+    if (num1 % 10 !== 5) num1 = (Math.floor(num1 / 10) * 10) + 5;
+    if (Math.random() > 0.5 && num2 % 10 !== 5) num2 = (Math.floor(num2 / 10) * 10) + 5;
+
+    const answer = num1 * num2;
+    currentQuestion = { question: `${num1} * ${num2}`, answer: answer.toString() };
+
+    document.getElementById('question').innerText = `${num1} * ${num2} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
+function generateTwelveToNineteenMultiplicationQuestion() {
+    const num1 = Math.floor(Math.random() * 8) + 12; // 12부터 19까지의 수
+    const num2 = Math.floor(Math.random() * 10) + 1; // 1부터 10까지의 수
+
+    const answer = num1 * num2;
+    currentQuestion = { question: `${num1} * ${num2}`, answer: answer.toString() };
+
+    document.getElementById('question').innerText = `${num1} * ${num2} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
 
 
 function changeQuestionType(newType) {
@@ -480,6 +515,12 @@ function checkAnswer() {
         case 'mathQuestion':
             isCorrect = (userAnswer === currentQuestion.answer.replace(/\s+/g, ''));
             break;
+        case 'multiplicationWithFiveEnd':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'twelveToNineteenMultiplication':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;    
         default:
             isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
     }
@@ -531,7 +572,9 @@ var buttonIds = ['addition-button','single-addition-button',
  'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button',
   'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button',
   'fraction-to-percentage-button','korean-multiplication-button',
-'percentage-question-button','prime-question-button','prime-or-multiple-question-button','math-question-button'];
+'percentage-question-button','prime-question-button',
+'prime-or-multiple-question-button','math-question-button',
+'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
