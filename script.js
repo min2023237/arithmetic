@@ -65,6 +65,9 @@ function generateQuestion() {
         case 'twelveToNineteenMultiplication':
             generateTwelveToNineteenMultiplicationQuestion();
             break;
+        case 'comparisonQuestion':
+            generateComparisonQuestion();
+            break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -94,7 +97,7 @@ function generateSingleDigitAdditionQuestion() {
 }
 
 function generateSubtractionQuestion() {
-    const a = Math.floor(Math.random() * 9999)+1;
+    const a = Math.floor(Math.random() * 999)+1;
     const b = Math.floor(Math.random() * (a+1));
     currentQuestion = { a, b, answer: a - b};
     document.getElementById('question').innerText = `${a} - ${b} = ?`;
@@ -479,6 +482,32 @@ function generateTwelveToNineteenMultiplicationQuestion() {
     isCorrect = false;
 }
 
+function generateComparisonQuestion() {
+    let numbers = [];
+    for (let i = 0; i < 6; i++) {
+        numbers.push(Math.floor(Math.random() * 9000) + 1000); // 1000에서 9999 사이의 수
+    }
+    const sum = numbers.reduce((a, b) => a + b, 0); // 합계 계산
+
+    // 만자리 단위의 수를 생성하고, 차이가 10000 이내가 되도록 조정
+    let comparisonNumber = Math.round(sum / 10000) * 10000;
+    if (Math.abs(sum - comparisonNumber) > 10000) {
+        comparisonNumber += (sum > comparisonNumber) ? 10000 : -10000;
+    }
+
+    currentQuestion = {
+        question: `${numbers.join(" + ")} vs ${comparisonNumber}`,
+        sum: sum,
+        comparisonNumber: comparisonNumber
+    };
+
+    document.getElementById('question').innerText = ` ${numbers.join(" + ")} vs ${comparisonNumber}`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
+
 
 function changeQuestionType(newType) {
     if (questionType !== newType) {
@@ -520,7 +549,14 @@ function checkAnswer() {
             break;
         case 'twelveToNineteenMultiplication':
             isCorrect = (userAnswer === currentQuestion.answer);
-            break;    
+            break;
+        case 'comparisonQuestion':
+            let correctAnswer = (currentQuestion.sum > currentQuestion.comparisonNumber) ? '>' :
+                        (currentQuestion.sum < currentQuestion.comparisonNumber) ? '<' : '=';
+
+            isCorrect = (userAnswer === correctAnswer);
+            break;
+
         default:
             isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
     }
@@ -574,7 +610,8 @@ var buttonIds = ['addition-button','single-addition-button',
   'fraction-to-percentage-button','korean-multiplication-button',
 'percentage-question-button','prime-question-button',
 'prime-or-multiple-question-button','math-question-button',
-'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button'];
+'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button',
+'comparison-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
