@@ -482,6 +482,8 @@ function generateTwelveToNineteenMultiplicationQuestion() {
     isCorrect = false;
 }
 
+
+
 function generateComparisonQuestion() {
     let numbers = [];
     for (let i = 0; i < 6; i++) {
@@ -489,23 +491,36 @@ function generateComparisonQuestion() {
     }
     const sum = numbers.reduce((a, b) => a + b, 0); // 합계 계산
 
+    // 합계의 앞 세 자리 추출
+    let sumLeadingThreeDigits = Math.floor(sum / Math.pow(10, Math.floor(Math.log10(sum)) - 2));
+
     // 만자리 단위의 수를 생성하고, 차이가 10,000 이내가 되도록 조정
     let comparisonNumber = Math.round(sum / 1000) * 1000;
     if (Math.abs(sum - comparisonNumber) > 1000) {
         comparisonNumber += (sum > comparisonNumber) ? 1000 : -1000;
     }
 
+    // 정답 문자열 생성
+    let correctAnswer = `${sumLeadingThreeDigits} `;
+    correctAnswer += (sumLeadingThreeDigits < comparisonNumber) ? '<' :
+                     (sumLeadingThreeDigits > comparisonNumber) ? '>' : '=';
+
     currentQuestion = {
         question: `${numbers.join(" + ")} vs ${comparisonNumber}`,
-        sum: sum,
-        comparisonNumber: comparisonNumber
+        sumLeadingThreeDigits: sumLeadingThreeDigits,
+        comparisonNumber: comparisonNumber,
+        answer: correctAnswer // 설정된 정답
     };
 
     document.getElementById('question').innerText = `${numbers.join(" + ")} vs ${comparisonNumber}`;
     document.getElementById('answer').value = '';
     document.getElementById('result').innerText = '';
     isCorrect = false;
+
+    // 업데이트된 정답을 hidden-answer 요소에 설정
+    document.getElementById('hidden-answer').innerText = `정답: ${correctAnswer}`;
 }
+
 
 
 
@@ -551,12 +566,8 @@ function checkAnswer() {
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
         case 'comparisonQuestion':
-            let correctAnswer = (currentQuestion.sum > currentQuestion.comparisonNumber) ? '>' :
-                        (currentQuestion.sum < currentQuestion.comparisonNumber) ? '<' : '=';
-
-            isCorrect = (userAnswer === correctAnswer);
+            isCorrect = (userAnswer === currentQuestion.answer);
             break;
-
         default:
             isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
     }
