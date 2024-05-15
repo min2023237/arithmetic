@@ -502,8 +502,8 @@ function generateComparisonQuestion() {
 
     // 정답 문자열 생성
     let correctAnswer = `${sumLeadingThreeDigits} `;
-    correctAnswer += (sumLeadingThreeDigits < comparisonNumber) ? '<' :
-                     (sumLeadingThreeDigits > comparisonNumber) ? '>' : '=';
+    correctAnswer += (sum < comparisonNumber) ? '<' :
+                     (sum > comparisonNumber) ? '>' : '=';
 
     currentQuestion = {
         question: `${numbers.join(" + ")} vs ${comparisonNumber}`,
