@@ -489,10 +489,16 @@ function generateComparisonQuestion() {
     }
     const sum = numbers.reduce((a, b) => a + b, 0); // 합계 계산
 
-    // 만자리 단위의 수를 생성하고, 차이가 10000 이내가 되도록 조정
-    let comparisonNumber = Math.round(sum / 10000) * 10000;
-    if (Math.abs(sum - comparisonNumber) > 10000) {
-        comparisonNumber += (sum > comparisonNumber) ? 10000 : -10000;
+    // 보다 정밀한 만자리 수 생성
+    let base = Math.floor(sum / 10000) * 10000; // 기본 만자리 수
+    let offset = sum % 10000; // 추가적인 오프셋 계산
+    let comparisonNumber = base;
+
+    // 오프셋을 이용한 비교 수 조정
+    if (offset > 5000) { // 오프셋이 5000보다 크면 상한 추가
+        comparisonNumber += 10000;
+    } else if (offset < -5000) { // 오프셋이 -5000보다 작으면 하한 감소
+        comparisonNumber -= 10000;
     }
 
     currentQuestion = {
@@ -501,7 +507,7 @@ function generateComparisonQuestion() {
         comparisonNumber: comparisonNumber
     };
 
-    document.getElementById('question').innerText = ` ${numbers.join(" + ")} vs ${comparisonNumber}`;
+    document.getElementById('question').innerText = `Which is greater? ${numbers.join(" + ")} = ? vs ${comparisonNumber}`;
     document.getElementById('answer').value = '';
     document.getElementById('result').innerText = '';
     isCorrect = false;
