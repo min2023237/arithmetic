@@ -492,7 +492,7 @@ function generateComparisonQuestion() {
     const sum = numbers.reduce((a, b) => a + b, 0); // 합계 계산
 
     // 합계의 앞 세 자리 추출
-    let sumLeadingThreeDigits = Math.floor(sum / Math.pow(10, Math.floor(Math.log10(sum)) - 2));
+    let sumLeadingThreeDigits = Math.floor(sum / Math.pow(10, Math.floor(Math.log10(sum)) - 1));
 
     // 만자리 단위의 수를 생성하고, 차이가 10,000 이내가 되도록 조정
     let comparisonNumber = Math.round(sum / 1000) * 1000;
