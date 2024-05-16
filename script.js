@@ -68,6 +68,12 @@ function generateQuestion() {
         case 'comparisonQuestion':
             generateComparisonQuestion();
             break;
+        case 'percentageFraction':
+            generatePercentageFractionQuestion();
+            break;
+        case 'multiplication':
+            generateMultiplicationQuestion();
+            break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -521,7 +527,118 @@ function generateComparisonQuestion() {
     document.getElementById('hidden-answer').innerText = `정답: ${correctAnswer}`;
 }
 
+function generatePercentageFractionQuestion() {
+    const denominator = 20; // Fixed denominator
+    const percentages = [15, 25, 35, 45, 55, 65, 75, 85, 95]; // Array of possible percentages
+    const numeratorOptions = percentages.map(p => Math.round(p * 0.01 * denominator)); // Calculate corresponding numerators
+    
+    // Randomly select an index for the arrays
+    const index = Math.floor(Math.random() * percentages.length);
+    
+    // Select the numerator based on the random index
+    const numerator = numeratorOptions[index];
+    
+    // Since these are direct calculations, the answer will be the selected percentage
+    const answer = `${percentages[index]}`;
 
+    // Build the question string
+    const question = `${numerator}/${denominator}`;
+
+    // Store the current question and answer
+    currentQuestion = { question, answer };
+
+    // Display the question
+    document.getElementById('question').innerText = `${question}?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
+
+const multiplicationProblems = {
+    3: ["2x1.5"],
+    4: ["2x2"],
+    5: ["2x2.5"],
+    6: ["2x3"],
+    7: ["2x3.5"],
+    8: ["2x4"],
+    9: ["3x3"],
+    10: ["2x5 4x2.5"],
+    12: ["2x6 3x4"],
+    14: ["2x7"],
+    15: ["3x5"],
+    16: ["2x8 4x4"],
+    18: ["2x9 3x6"],
+    20: ["2x10 4x5"],
+    21: ["3x7"],
+    22: ["2x11"],
+    24: ["2x12 3x8 4x6"],
+    25: ["5x5"],
+    26: ["2x13"],
+    27: ["3x9"],
+    28: ["2x14 4x7"],
+    30: ["3x10 5x6"],
+    32: ["2x16 4x8"],
+    33: ["3x11"],
+    34: ["2x17"],
+    35: ["5x7"],
+    36: ["2x18 3x12 4x9 6x6"],
+    38: ["2x19"],
+    39: ["3x13"],
+    40: ["2x20 4x10 8x5"],
+    42: ["3x14 6x7"],
+    44: ["4x11"],
+    45: ["3x15 5x9"],
+    48: ["4x12 6x8"],
+    49: ["7x7"],
+    50: ["5x10"],
+    51: ["3x17"],
+    52: ["4x13"],
+    54: ["3x18 6x9"],
+    55: ["5x11"],
+    56: ["4x14 8x7"],
+    57: ["3x19"],
+    60: ["3x20 5x12 6x10"],
+    63: ["7x9"],
+    64: ["4x16 8x8"],
+    65: ["5x13"],
+    66: ["6x11"],
+    68: ["4x17"],
+    70: ["5x14 7x10"],
+    72: ["4x18 6x12 8x9"],
+    75: ["5x15"],
+    76: ["4x19"],
+    77: ["7x11"],
+    80: ["4x20 5x16 8x10"],
+    81: ["9x9"],
+    84: ["7x12"],
+    85: ["5x17"],
+    88: ["8x11"],
+    90: ["5x18 9x10"],
+    95: ["5x19"],
+    96: ["6x16 8x12"],
+    98: ["7x14"],
+    99: ["9x11"],
+    100: ["5x20 10x10"]
+};
+
+function generateMultiplicationQuestion() {
+    const keys = Object.keys(multiplicationProblems);
+    const randomKey = keys[Math.floor(Math.random() * keys.length)];
+    const randomExpressions = multiplicationProblems[randomKey];
+    
+    // Select a random expression if there are multiple options
+    const expression = randomExpressions[Math.floor(Math.random() * randomExpressions.length)];
+
+    // Store the current question and answer
+    currentQuestion = { question: `${randomKey} = ?`, answer: expression };
+
+    // Display the question
+    document.getElementById('question').innerText = `${randomKey}?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
 
 
 function changeQuestionType(newType) {
@@ -566,6 +683,12 @@ function checkAnswer() {
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
         case 'comparisonQuestion':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'percentageFraction':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'multiplication':
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
         default:
@@ -622,7 +745,8 @@ var buttonIds = ['addition-button','single-addition-button',
 'percentage-question-button','prime-question-button',
 'prime-or-multiple-question-button','math-question-button',
 'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button',
-'comparison-question-button'];
+'comparison-question-button', 'percentage-fraction-question-button',
+'multiplication-question-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
