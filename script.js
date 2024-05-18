@@ -74,6 +74,9 @@ function generateQuestion() {
         case 'multiplication':
             generateMultiplicationQuestion();
             break;
+        case 'tensAndUnitsPlaceMultiplication':
+            generateTensAndUnitsPlaceMultiplicationQuestion();
+            break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -296,8 +299,6 @@ function generateTensPlaceMultiplicationQuestion() {
 }
 
 function generateUnitsPlaceMultiplicationQuestion() {
-    //const unitsPlace =Math.floor(Math.random() * 9) + 1;
-    //const tensPlace1 =Math.floor(Math.random() * 9) + 1;
     const unitsPlace = Math.floor(Math.random() * 10); // 0부터 9까지의 수
     const tensPlace1 = Math.floor(Math.random() * 10); // 0부터 9까지의 수
     const tensPlace2 = 10 - tensPlace1; // 십의 자리를 더했을 때 10이 되는 수
@@ -315,6 +316,39 @@ function generateUnitsPlaceMultiplicationQuestion() {
     document.getElementById('answer').value = '';
     document.getElementById('result').innerText = '';
 }
+
+function generateTensAndUnitsPlaceMultiplicationQuestion() {
+    // Randomly decide whether to generate a tens place multiplication question or a units place multiplication question
+    const questionType = Math.random() < 0.5 ? 'tensPlace' : 'unitsPlace';
+    let num1, num2;
+
+    if (questionType === 'tensPlace') {
+        const tensPlace = Math.floor(Math.random() * 9) + 1; // 1부터 9까지의 수
+        const unitPlace1 = Math.floor(Math.random() * 9) + 1;
+        const unitPlace2 = 10 - unitPlace1; // 일의 자리를 더했을 때 10이 되는 수
+
+        num1 = tensPlace * 10 + unitPlace1;
+        num2 = tensPlace * 10 + unitPlace2;
+    } else {
+        const unitsPlace = Math.floor(Math.random() * 10); // 0부터 9까지의 수
+        const tensPlace1 = Math.floor(Math.random() * 10); // 0부터 9까지의 수
+        let tensPlace2 = 10 - tensPlace1; // 십의 자리를 더했을 때 10이 되는 수
+
+        // 두 수가 10을 넘지 않도록 조정
+        if (tensPlace2 === 10) {
+            tensPlace2 = 0;
+        }
+
+        num1 = tensPlace1 * 10 + unitsPlace;
+        num2 = tensPlace2 * 10 + unitsPlace;
+    }
+
+    currentQuestion = { num1, num2, answer: num1 * num2 };
+    document.getElementById('question').innerText = `${num1} * ${num2} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+}
+
 
 function generateFractionToPercentageQuestion() {
     const denominator = Math.floor(Math.random() * 20) + 1; // 1부터 20까지의 수
@@ -459,12 +493,18 @@ function generateMathQuestion() {
 }
 
 function generateMultiplicationWithFiveEndQuestion() {
-    let num1 = Math.floor(Math.random() * 100) + 1; // 1부터 100까지의 수
-    let num2 = Math.floor(Math.random() * 100) + 1; // 1부터 100까지의 수
+    let num1, num2;
 
-    // 적어도 하나의 숫자가 5로 끝나도록 조정
-    if (num1 % 10 !== 5) num1 = (Math.floor(num1 / 10) * 10) + 5;
-    if (Math.random() > 0.5 && num2 % 10 !== 5) num2 = (Math.floor(num2 / 10) * 10) + 5;
+    // Randomly decide which number should end with 5
+    if (Math.random() > 0.5) {
+        // num1 ends with 5
+        num1 = (Math.floor(Math.random() * 10) * 10) + 5; // e.g., 5, 15, 25, ..., 95
+        num2 = (Math.floor(Math.random() * 50) + 1) * 2; // Generates an even number between 2 and 100
+    } else {
+        // num2 ends with 5
+        num2 = (Math.floor(Math.random() * 10) * 10) + 5; // e.g., 5, 15, 25, ..., 95
+        num1 = (Math.floor(Math.random() * 50) + 1) * 2; // Generates an even number between 2 and 100
+    }
 
     const answer = num1 * num2;
     currentQuestion = { question: `${num1} * ${num2}`, answer: answer.toString() };
@@ -474,6 +514,7 @@ function generateMultiplicationWithFiveEndQuestion() {
     document.getElementById('result').innerText = '';
     isCorrect = false;
 }
+
 
 function generateTwelveToNineteenMultiplicationQuestion() {
     const num1 = Math.floor(Math.random() * 8) + 12; // 12부터 19까지의 수
@@ -585,7 +626,7 @@ const multiplicationProblems = {
     36: ["2x18 3x12 4x9 6x6"],
     38: ["2x19"],
     39: ["3x13"],
-    40: ["2x20 4x10 8x5"],
+    40: ["2x20 4x10 5x8"],
     42: ["3x14 6x7"],
     44: ["4x11"],
     45: ["3x15 5x9"],
@@ -596,7 +637,7 @@ const multiplicationProblems = {
     52: ["4x13"],
     54: ["3x18 6x9"],
     55: ["5x11"],
-    56: ["4x14 8x7"],
+    56: ["4x14 7x8"],
     57: ["3x19"],
     60: ["3x20 5x12 6x10"],
     63: ["7x9"],
@@ -746,7 +787,7 @@ var buttonIds = ['addition-button','single-addition-button',
 'prime-or-multiple-question-button','math-question-button',
 'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button',
 'comparison-question-button', 'percentage-fraction-question-button',
-'multiplication-question-button'];
+'multiplication-question-button','tensAndUnitsPlaceMultiplication-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
