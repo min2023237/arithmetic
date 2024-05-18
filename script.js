@@ -478,7 +478,13 @@ const mathQuestions = [
     { question: "2^10", answer: "1024" },
     { question: "x * 5", answer: " 10x / 2" },
     { question: "(x+a)(x-a)", answer: "x^2 - a^2" },
-    { question: "75 * 4", answer: "300" }
+    { question: "75 * 4", answer: "300" },
+    { question: "45 * 3", answer: "135" },
+    { question: "65 * 3", answer: "195" },
+    { question: "95 * 4", answer: "380" },
+    { question: "85 * ? = 170", answer: "2" },
+    { question: "75 * ? = 300", answer: "4" }
+
 ];
 
 function generateMathQuestion() {
