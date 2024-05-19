@@ -77,6 +77,9 @@ function generateQuestion() {
         case 'tensAndUnitsPlaceMultiplication':
             generateTensAndUnitsPlaceMultiplicationQuestion();
             break;
+        case 'simpleFraction':
+            generateSimpleFractionQuestion();
+            break;
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -687,6 +690,49 @@ function generateMultiplicationQuestion() {
     isCorrect = false;
 }
 
+function generateSimpleFractionQuestion() {
+    const denominator = Math.floor(Math.random() * 20) + 1; 
+    const numerator = 1;
+    let answer;
+
+    switch(denominator) {
+        case 6:
+            answer = "16.66";
+            break;
+        case 7:
+            answer = "14.2857";
+            break;
+        case 11:
+            answer = "09.0909";
+            break;
+        case 13:
+            answer = "7.7";
+            break;
+        case 14:
+            answer = "7.142857";
+            break;
+        case 15:
+            answer = "6.66";
+            break;
+        case 18:
+            answer = "5.55";
+            break;
+        case 19:
+            answer = "5.25";
+            break;
+        default:
+            answer = (numerator / denominator * 100).toFixed(2) + '%'; // Calculate percentage and format to 2 decimal places
+            break;
+    }
+   
+    currentQuestion = { question: `${numerator} / ${denominator}`, answer };
+
+    document.getElementById('question').innerText = `${numerator} / ${denominator} = ? %`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false;
+}
+
 
 function changeQuestionType(newType) {
     if (questionType !== newType) {
@@ -736,6 +782,9 @@ function checkAnswer() {
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
         case 'multiplication':
+            isCorrect = (userAnswer === currentQuestion.answer);
+            break;
+        case 'simpleFraction':
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
         default:
@@ -793,7 +842,7 @@ var buttonIds = ['addition-button','single-addition-button',
 'prime-or-multiple-question-button','math-question-button',
 'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button',
 'comparison-question-button', 'percentage-fraction-question-button',
-'multiplication-question-button','tensAndUnitsPlaceMultiplication-button'];
+'multiplication-question-button','tensAndUnitsPlaceMultiplication-button','simpleFraction-button'];
 
 function scrollButtons(direction) {
     if (direction === 'right') {
