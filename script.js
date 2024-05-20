@@ -721,7 +721,7 @@ function generateSimpleFractionQuestion() {
             answer = "5.25";
             break;
         default:
-            answer = (numerator / denominator * 100).toFixed(2) + '%'; // Calculate percentage and format to 2 decimal places
+            answer = (numerator / denominator * 100).toFixed(2); // Calculate percentage and format to 2 decimal places
             break;
     }
    
