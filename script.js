@@ -2,7 +2,6 @@ let currentQuestion;
 let questionType = 'addition'; // 초기 연산 유형 설정
 let questionsAttempted = 0; // 문제를 푼 횟수
 
-
 function generateQuestion() {
     switch (questionType) {
         case 'addition':
@@ -280,10 +279,6 @@ function generateSubtractionComparisonQuestion() {
 
     isCorrect = false;
 }
-
-
-    
-
 
 
 function generateTensPlaceMultiplicationQuestion() {
@@ -801,8 +796,6 @@ function checkAnswer() {
     }
 }
 
-
-
 function updateQuestionsAttemptedDisplay() {
     document.getElementById('questions-attempted').innerText = `문제 푼 횟수: ${questionsAttempted}`;
 }
@@ -824,64 +817,20 @@ function clearAnswer() {
     document.getElementById('answer').value = '';
 }
 
-
-
 function removeLastDigit() {
     const answerField = document.getElementById('answer');
     answerField.value = answerField.value.slice(0, -1);
 }
 
-
-// 스크롤 버튼
-var buttonIds = ['addition-button','single-addition-button', 
-'complement-button', 'subtraction-button', 'addition-comparison-button',
- 'subtraction-comparison-button', 'tensPlaceMultiplication-button','unitsPlaceMultiplication-button',
-  'tenMultiple-button','multipleChoice-button', 'multiplication-button', 'division-button',
-  'fraction-to-percentage-button','korean-multiplication-button',
-'percentage-question-button','prime-question-button',
-'prime-or-multiple-question-button','math-question-button',
-'multiplication-with-five-end-question-button','twelve-to-nineteen-multiplication-question-button',
-'comparison-question-button', 'percentage-fraction-question-button',
-'multiplication-question-button','tensAndUnitsPlaceMultiplication-button','simpleFraction-button'];
-
-var currentIndex = 0; // 현재 시작 인덱스
-
-function scrollButtons(direction) {
-    if (direction === 'right') {
-        currentIndex += 10; // 다음 10개로 이동
-        if (currentIndex >= buttonIds.length) currentIndex = 0; // 마지막을 넘으면 처음으로
-    } else {
-        currentIndex -= 10; // 이전 10개로 이동
-        if (currentIndex < 0) currentIndex = Math.max(0, buttonIds.length - 10); // 처음을 넘으면 마지막으로
-    }
-    updateButtonVisibility();
+// 사이드바 열기 및 닫기 기능
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('active');
 }
-
-function updateButtonVisibility() {
-    document.querySelectorAll('.button-style').forEach(function(button) {
-        button.style.display = 'none'; // 모든 버튼을 숨김
-    });
-
-    for (var i = currentIndex; i < currentIndex + 10 && i < buttonIds.length; i++) {
-        var buttonId = buttonIds[i];
-        if (buttonId) {
-            document.getElementById(buttonId).style.display = 'inline-block'; // 현재 인덱스부터 10개의 버튼만 표시
-        }
-    }
-}
-
-//다음 문제로 이동
-function nextQuestion() {
-    generateQuestion(); // 새로운 문제 생성
-    document.getElementById('answer').value = ''; // 답 입력 필드 초기화
-    document.getElementById('result').innerText = ''; // 결과 텍스트 초기화
-}
-
 
 // 페이지 로드 시 초기 버튼 상태 설정
 window.onload = function() {
     generateQuestion();
     document.getElementById('answer').addEventListener('keypress', handleKeyPress);
-    updateButtonVisibility();
     updateQuestionsAttemptedDisplay(); // 초기 문제 푼 횟수 화면에 표시
 };
