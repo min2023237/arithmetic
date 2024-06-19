@@ -828,6 +828,11 @@ function toggleSidebar() {
     sidebar.classList.toggle('active');
 }
 
+function showHint() {
+    const hintElement = document.getElementById('hidden-answer');
+    hintElement.style.display = 'block'; // 힌트를 보이게 설정
+}
+
 // 페이지 로드 시 초기 버튼 상태 설정
 window.onload = function() {
     generateQuestion();

@@ -67,7 +67,7 @@
         <div class="calc-container">
             <div class="input-container">
                 <input type="text" id="answer" class="answer">
-                <button class="check-answer-button" onclick="checkAnswer()">확인</button>
+                <button class="check-answer-button" onclick="checkAnswer()">제출</button>
             </div>
             <!-- 숫자 키패드 추가 -->
             <div class="keypad">
@@ -79,7 +79,7 @@
                 <button onclick="appendToAnswer('o')">o</button>
                 <button class="backspace-button" onclick="removeLastDigit()">←</button>
                 <button class="clear-button" onclick="clearAnswer()">C</button>
-                <button></button>
+                <button onclick="nextQuestion()">next</button>
                 <button onclick="appendToAnswer(1)">1</button>
                 <button onclick="appendToAnswer(2)">2</button>
                 <button onclick="appendToAnswer(3)">3</button>
@@ -91,8 +91,8 @@
                 <button onclick="appendToAnswer(9)">9</button>
                 <button onclick="appendToAnswer('.')">.</button>
                 <button onclick="appendToAnswer(0)">0</button>
-                <button onclick="nextQuestion()">next</button>
-                <div id="hidden-answer" style="color: rgba(255, 255, 255, 0.947);"></div>
+                <button class="hint-button" onclick="showHint()">정답</button>
+                <div id="hidden-answer" style="color: rgba(80, 80, 80, 0.947); display: none;"></div> <!-- display: none 추가 -->
             </div>
         </div>
     </div>
