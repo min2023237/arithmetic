@@ -10,6 +10,37 @@
 </head>
 
 <body>
+    <div class="button-container">
+        <button onclick="scrollButtons('left')">▲</button>
+        <button class="button-style" id="addition-button" onclick="changeQuestionType('addition')">덧셈</button>
+        <button class="button-style" id="single-addition-button" onclick="changeQuestionType('singleAddition')">한자리덧셈</button>
+        <button class="button-style" id="complement-button" onclick="changeQuestionType('complement')">100보수</button>
+        <button class="button-style" id="subtraction-button" onclick="changeQuestionType('subtraction')">뺄셈</button>
+        <button class="button-style" id="addition-comparison-button" onclick="changeQuestionType('addition-comparison')">덧셈비교</button>
+        <button class="button-style" id="subtraction-comparison-button" onclick="changeQuestionType('subtractionComparison')">뺄셈비교</button>
+        <button class="button-style" id="tenMultiple-button" onclick="changeQuestionType('tenMultiple')">십구구단</button>
+        <button class="button-style" id="tensPlaceMultiplication-button" onclick="changeQuestionType('tensPlaceMultiplication')">십동일보</button>
+        <button class="button-style" id="unitsPlaceMultiplication-button" onclick="changeQuestionType('unitsPlaceMultiplication')">십보일동</button>
+        <button class="button-style" id="tensAndUnitsPlaceMultiplication-button" onclick="changeQuestionType('tensAndUnitsPlaceMultiplication')">십동십보</button>
+        <button class="button-style" id="multiplication-button" onclick="changeQuestionType('multiplication')">곱셈</button>
+        <button class="button-style" id="multipleChoice-button" onclick="changeQuestionType('multipleChoice')">배수</button>
+        <button class="button-style" id="division-button" onclick="changeQuestionType('division')">나눗셈</button>
+        <button class="button-style" id="fraction-to-percentage-button" onclick="changeQuestionType('fractionToPercentage')">분수값</button>
+        <button class="button-style" id="korean-multiplication-button" onclick="changeQuestionType('koreanMultiplication')">한국어 숫자 곱셈</button>
+        <button class="button-style" id="percentage-question-button" onclick="changeQuestionType('percentageQuestion')">퍼센트 계산</button>
+        <button class="button-style" id="prime-question-button" onclick="changeQuestionType('primeQuestion')">소수 판별</button>
+        <button class="button-style" id="prime-or-multiple-question-button" onclick="changeQuestionType('primeOrMultiple')">소수 또는 최대 배수</button>
+        <button class="button-style" id="math-question-button" onclick="changeQuestionType('mathQuestion')">수학 계산 문제</button>
+        <button class="button-style" id="multiplication-with-five-end-question-button" onclick="changeQuestionType('multiplicationWithFiveEnd')">5로 끝나는 수의 곱셈</button>
+        <button class="button-style" id="twelve-to-nineteen-multiplication-question-button" onclick="changeQuestionType('twelveToNineteenMultiplication')">12~19단</button>
+        <button class="button-style" id="comparison-question-button" onclick="changeQuestionType('comparisonQuestion')">비교</button>
+        <button class="button-style" id="percentage-fraction-question-button" onclick="changeQuestionType('percentageFraction')">5%</button>
+        <button class="button-style" id="multiplication-question-button" onclick="changeQuestionType('multiplication')">인수분해</button>
+        <button class="button-style" id="simpleFraction-button" onclick="changeQuestionType('simpleFraction')">심플분수값</button>
+
+        <button onclick="scrollButtons('right')">▼</button>
+    </div>
+
     <div class="main-container">
         <div id="questions-attempted">문제 푼 횟수: 0/100</div>
         <div class="quiz-container">
@@ -17,39 +48,11 @@
             <div id="result"></div>
         </div>
 
-        <div class="button-container">
-            <button onclick="scrollButtons('left')">〈</button>
-            <button class="button-style" id="addition-button" onclick="changeQuestionType('addition')">덧셈</button>
-            <button class="button-style" id="single-addition-button" onclick="changeQuestionType('singleAddition')">한자리덧셈</button>
-            <button class="button-style" id="complement-button" onclick="changeQuestionType('complement')">100보수</button>
-            <button class="button-style" id="subtraction-button" onclick="changeQuestionType('subtraction')">뺄셈</button>
-            <button class="button-style" id="addition-comparison-button" onclick="changeQuestionType('addition-comparison')">덧셈비교</button>
-            <button class="button-style" id="subtraction-comparison-button" onclick="changeQuestionType('subtractionComparison')">뺄셈비교</button>
-            <button class="button-style" id="tenMultiple-button" onclick="changeQuestionType('tenMultiple')">십구구단</button>
-            <button class="button-style" id="tensPlaceMultiplication-button" onclick="changeQuestionType('tensPlaceMultiplication')">십동일보</button>
-            <button class="button-style" id="unitsPlaceMultiplication-button" onclick="changeQuestionType('unitsPlaceMultiplication')">십보일동</button>
-            <button class="button-style" id="tensAndUnitsPlaceMultiplication-button" onclick="changeQuestionType('tensAndUnitsPlaceMultiplication')">십동십보</button>
-            <button class="button-style" id="multiplication-button" onclick="changeQuestionType('multiplication')">곱셈</button>
-            <button class="button-style" id="multipleChoice-button" onclick="changeQuestionType('multipleChoice')">배수</button>
-            <button class="button-style" id="division-button" onclick="changeQuestionType('division')">나눗셈</button>
-            <button class="button-style" id="fraction-to-percentage-button" onclick="changeQuestionType('fractionToPercentage')">분수값</button>
-            <button class="button-style" id="korean-multiplication-button" onclick="changeQuestionType('koreanMultiplication')">한국어 숫자 곱셈</button>
-            <button class="button-style" id="percentage-question-button" onclick="changeQuestionType('percentageQuestion')">퍼센트 계산</button>
-            <button class="button-style" id="prime-question-button" onclick="changeQuestionType('primeQuestion')">소수 판별</button>
-            <button class="button-style" id="prime-or-multiple-question-button" onclick="changeQuestionType('primeOrMultiple')">소수 또는 최대 배수</button>
-            <button class="button-style" id="math-question-button" onclick="changeQuestionType('mathQuestion')">수학 계산 문제</button>
-            <button class="button-style" id="multiplication-with-five-end-question-button" onclick="changeQuestionType('multiplicationWithFiveEnd')">5로 끝나는 수의 곱셈</button>
-            <button class="button-style" id="twelve-to-nineteen-multiplication-question-button" onclick="changeQuestionType('twelveToNineteenMultiplication')">12~19단</button>
-            <button class="button-style" id="comparison-question-button" onclick="changeQuestionType('comparisonQuestion')">비교</button>
-            <button class="button-style" id="percentage-fraction-question-button" onclick="changeQuestionType('percentageFraction')">5%</button>
-            <button class="button-style" id="multiplication-question-button" onclick="changeQuestionType('multiplication')">인수분해</button>
-            <button class="button-style" id="simpleFraction-button" onclick="changeQuestionType('simpleFraction')">심플분수값</button>
-
-            <button onclick="scrollButtons('right')">〉</button>
-        </div>
-
         <div class="calc-container">
-            <input type="text" id="answer" class="answer">
+            <div class="input-container">
+                <input type="text" id="answer" class="answer">
+                <button class="check-answer-button" onclick="checkAnswer()">확인</button>
+            </div>
             <!-- 숫자 키패드 추가 -->
             <div class="keypad">
                 <button onclick="appendToAnswer('<')"><</button>
@@ -60,7 +63,7 @@
                 <button onclick="appendToAnswer('o')">o</button>
                 <button class="backspace-button" onclick="removeLastDigit()">←</button>
                 <button class="clear-button" onclick="clearAnswer()">C</button>
-                <button class="check-answer-button" onclick="checkAnswer()">정답 확인</button>
+                <button></button>
                 <button onclick="appendToAnswer(1)">1</button>
                 <button onclick="appendToAnswer(2)">2</button>
                 <button onclick="appendToAnswer(3)">3</button>
@@ -77,7 +80,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="script.js"></script>
 </body>

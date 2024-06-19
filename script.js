@@ -844,26 +844,28 @@ var buttonIds = ['addition-button','single-addition-button',
 'comparison-question-button', 'percentage-fraction-question-button',
 'multiplication-question-button','tensAndUnitsPlaceMultiplication-button','simpleFraction-button'];
 
+var currentIndex = 0; // 현재 시작 인덱스
+
 function scrollButtons(direction) {
     if (direction === 'right') {
-        buttonIds.push(buttonIds.shift()); // 배열의 첫 번째 요소를 끝으로 이동
+        currentIndex += 10; // 다음 10개로 이동
+        if (currentIndex >= buttonIds.length) currentIndex = 0; // 마지막을 넘으면 처음으로
     } else {
-        buttonIds.unshift(buttonIds.pop()); // 배열의 마지막 요소를 처음으로 이동
+        currentIndex -= 10; // 이전 10개로 이동
+        if (currentIndex < 0) currentIndex = Math.max(0, buttonIds.length - 10); // 처음을 넘으면 마지막으로
     }
     updateButtonVisibility();
 }
 
 function updateButtonVisibility() {
-    // 모든 버튼을 숨깁니다.
     document.querySelectorAll('.button-style').forEach(function(button) {
-        button.style.display = 'none';
+        button.style.display = 'none'; // 모든 버튼을 숨김
     });
 
-    // 배열의 처음 3개 버튼만 표시합니다.
-    for (var i = 0; i < 3; i++) {
+    for (var i = currentIndex; i < currentIndex + 10 && i < buttonIds.length; i++) {
         var buttonId = buttonIds[i];
         if (buttonId) {
-            document.getElementById(buttonId).style.display = 'inline-block';
+            document.getElementById(buttonId).style.display = 'inline-block'; // 현재 인덱스부터 10개의 버튼만 표시
         }
     }
 }
