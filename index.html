@@ -14,31 +14,31 @@
     
     <div id="sidebar" class="sidebar">
         <button class="closebtn" onclick="toggleSidebar()">×</button>
-        <button class="button-style" id="addition-button" onclick="changeQuestionType('addition')">덧셈</button>
-        <button class="button-style" id="single-addition-button" onclick="changeQuestionType('singleAddition')">한자리덧셈</button>
-        <button class="button-style" id="complement-button" onclick="changeQuestionType('complement')">100보수</button>
-        <button class="button-style" id="subtraction-button" onclick="changeQuestionType('subtraction')">뺄셈</button>
-        <button class="button-style" id="addition-comparison-button" onclick="changeQuestionType('addition-comparison')">덧셈비교</button>
-        <button class="button-style" id="subtraction-comparison-button" onclick="changeQuestionType('subtractionComparison')">뺄셈비교</button>
-        <button class="button-style" id="tenMultiple-button" onclick="changeQuestionType('tenMultiple')">십구구단</button>
-        <button class="button-style" id="tensPlaceMultiplication-button" onclick="changeQuestionType('tensPlaceMultiplication')">십동일보</button>
-        <button class="button-style" id="unitsPlaceMultiplication-button" onclick="changeQuestionType('unitsPlaceMultiplication')">십보일동</button>
-        <button class="button-style" id="tensAndUnitsPlaceMultiplication-button" onclick="changeQuestionType('tensAndUnitsPlaceMultiplication')">십동십보</button>
-        <button class="button-style" id="multiplication-button" onclick="changeQuestionType('multiplication')">곱셈</button>
-        <button class="button-style" id="multipleChoice-button" onclick="changeQuestionType('multipleChoice')">배수</button>
-        <button class="button-style" id="division-button" onclick="changeQuestionType('division')">나눗셈</button>
-        <button class="button-style" id="fraction-to-percentage-button" onclick="changeQuestionType('fractionToPercentage')">분수값</button>
-        <button class="button-style" id="korean-multiplication-button" onclick="changeQuestionType('koreanMultiplication')">한국어 숫자 곱셈</button>
-        <button class="button-style" id="percentage-question-button" onclick="changeQuestionType('percentageQuestion')">퍼센트 계산</button>
-        <button class="button-style" id="prime-question-button" onclick="changeQuestionType('primeQuestion')">소수 판별</button>
-        <button class="button-style" id="prime-or-multiple-question-button" onclick="changeQuestionType('primeOrMultiple')">소수 또는 최대 배수</button>
-        <button class="button-style" id="math-question-button" onclick="changeQuestionType('mathQuestion')">수학 계산 문제</button>
-        <button class="button-style" id="multiplication-with-five-end-question-button" onclick="changeQuestionType('multiplicationWithFiveEnd')">5로 끝나는 수의 곱셈</button>
-        <button class="button-style" id="twelve-to-nineteen-multiplication-question-button" onclick="changeQuestionType('twelveToNineteenMultiplication')">12~19단</button>
-        <button class="button-style" id="comparison-question-button" onclick="changeQuestionType('comparisonQuestion')">비교</button>
-        <button class="button-style" id="percentage-fraction-question-button" onclick="changeQuestionType('percentageFraction')">5%</button>
-        <button class="button-style" id="multiplication-question-button" onclick="changeQuestionType('multiplication')">인수분해</button>
-        <button class="button-style" id="simpleFraction-button" onclick="changeQuestionType('simpleFraction')">심플분수값</button>
+        <button class="button-style" id="addition-button" onclick="changeQuestionType('addition'); closeSidebar()">덧셈</button>
+        <button class="button-style" id="single-addition-button" onclick="changeQuestionType('singleAddition'); closeSidebar()">한자리덧셈</button>
+        <button class="button-style" id="complement-button" onclick="changeQuestionType('complement'); closeSidebar()">100보수</button>
+        <button class="button-style" id="subtraction-button" onclick="changeQuestionType('subtraction'); closeSidebar()">뺄셈</button>
+        <button class="button-style" id="addition-comparison-button" onclick="changeQuestionType('addition-comparison'); closeSidebar()">덧셈비교</button>
+        <button class="button-style" id="subtraction-comparison-button" onclick="changeQuestionType('subtractionComparison'); closeSidebar()">뺄셈비교</button>
+        <button class="button-style" id="tenMultiple-button" onclick="changeQuestionType('tenMultiple'); closeSidebar()">십구구단</button>
+        <button class="button-style" id="tensPlaceMultiplication-button" onclick="changeQuestionType('tensPlaceMultiplication'); closeSidebar()">십동일보</button>
+        <button class="button-style" id="unitsPlaceMultiplication-button" onclick="changeQuestionType('unitsPlaceMultiplication'); closeSidebar()">십보일동</button>
+        <button class="button-style" id="tensAndUnitsPlaceMultiplication-button" onclick="changeQuestionType('tensAndUnitsPlaceMultiplication'); closeSidebar()">십동십보</button>
+        <button class="button-style" id="multiplication-button" onclick="changeQuestionType('multiplication'); closeSidebar()">곱셈</button>
+        <button class="button-style" id="multipleChoice-button" onclick="changeQuestionType('multipleChoice'); closeSidebar()">배수</button>
+        <button class="button-style" id="division-button" onclick="changeQuestionType('division'); closeSidebar()">나눗셈</button>
+        <button class="button-style" id="fraction-to-percentage-button" onclick="changeQuestionType('fractionToPercentage'); closeSidebar()">분수값</button>
+        <button class="button-style" id="korean-multiplication-button" onclick="changeQuestionType('koreanMultiplication'); closeSidebar()">한국어 숫자 곱셈</button>
+        <button class="button-style" id="percentage-question-button" onclick="changeQuestionType('percentageQuestion'); closeSidebar()">퍼센트 계산</button>
+        <button class="button-style" id="prime-question-button" onclick="changeQuestionType('primeQuestion'); closeSidebar()">소수 판별</button>
+        <button class="button-style" id="prime-or-multiple-question-button" onclick="changeQuestionType('primeOrMultiple'); closeSidebar()">소수 또는 최대 배수</button>
+        <button class="button-style" id="math-question-button" onclick="changeQuestionType('mathQuestion'); closeSidebar()">수학 계산 문제</button>
+        <button class="button-style" id="multiplication-with-five-end-question-button" onclick="changeQuestionType('multiplicationWithFiveEnd'); closeSidebar()">5로 끝나는 수의 곱셈</button>
+        <button class="button-style" id="twelve-to-nineteen-multiplication-question-button" onclick="changeQuestionType('twelveToNineteenMultiplication'); closeSidebar()">12~19단</button>
+        <button class="button-style" id="comparison-question-button" onclick="changeQuestionType('comparisonQuestion'); closeSidebar()">비교</button>
+        <button class="button-style" id="percentage-fraction-question-button" onclick="changeQuestionType('percentageFraction'); closeSidebar()">5%</button>
+        <button class="button-style" id="multiplication-question-button" onclick="changeQuestionType('multiplication'); closeSidebar()">인수분해</button>
+        <button class="button-style" id="simpleFraction-button" onclick="changeQuestionType('simpleFraction'); closeSidebar()">심플분수값</button>
         <button class="button-style"></button>
         <button class="button-style"></button>
         <button class="button-style"></button>

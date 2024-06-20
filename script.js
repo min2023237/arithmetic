@@ -82,6 +82,9 @@ function generateQuestion() {
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
+    // 새로운 문제가 생성될 때 hidden-answer를 숨김
+    document.getElementById('hidden-answer').style.display = 'none';
+
 }
 
 function generateAdditionQuestion() {
@@ -349,8 +352,13 @@ function generateTensAndUnitsPlaceMultiplicationQuestion() {
 
 
 function generateFractionToPercentageQuestion() {
-    const denominator = Math.floor(Math.random() * 20) + 1; // 1부터 20까지의 수
-    const numerator = Math.floor(Math.random() * denominator) + 1; // 1부터 20까지의 수, 분자와 독립적으로 설정
+    let numerator, denominator;
+
+    do {
+        denominator = Math.floor(Math.random() * 20) + 1; // 1부터 20까지의 수
+        numerator = Math.floor(Math.random() * denominator) + 1; // 1부터 (denominator-1)까지의 수
+    } while (numerator === denominator); // 분자가 분모와 동일한 경우를 제외
+
     const answer = (numerator / denominator * 100).toFixed(2); // 소수점 두 자리까지의 퍼센트로 변환
 
     currentQuestion = { numerator, denominator, answer };
@@ -359,6 +367,7 @@ function generateFractionToPercentageQuestion() {
     document.getElementById('result').innerText = '';
     isCorrect = false;
 }
+
 
 const multiplicationQuestions = {
     "십*십": "백",
@@ -686,7 +695,11 @@ function generateMultiplicationQuestion() {
 }
 
 function generateSimpleFractionQuestion() {
-    const denominator = Math.floor(Math.random() * 20) + 1; 
+    let denominator;
+    do {
+        denominator = Math.floor(Math.random() * 20) + 1; // 1부터 20까지의 수
+    } while (denominator === 1); // 분모가 1인 경우를 제외
+
     const numerator = 1;
     let answer;
 
@@ -729,6 +742,11 @@ function generateSimpleFractionQuestion() {
 }
 
 
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.remove('active');
+}
+
 function changeQuestionType(newType) {
     if (questionType !== newType) {
         questionType = newType;
@@ -736,6 +754,7 @@ function changeQuestionType(newType) {
         updateQuestionsAttemptedDisplay(); // 푼 횟수 화면 업데이트
     }
     generateQuestion();
+    closeSidebar(); // 새로운 문제를 생성할 때 사이드바 닫기
 }
 
 function checkAnswer() {
@@ -829,8 +848,7 @@ function toggleSidebar() {
 }
 
 function showHint() {
-    const hintElement = document.getElementById('hidden-answer');
-    hintElement.style.display = 'block'; // 힌트를 보이게 설정
+    document.getElementById('hidden-answer').style.display = 'block';
 }
 
 // 페이지 로드 시 초기 버튼 상태 설정
