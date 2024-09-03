@@ -7,6 +7,9 @@ function generateQuestion() {
         case 'addition':
             generateAdditionQuestion();
             break;
+        case 'doubleAddition':
+            generateDoubleDigitAdditionQuestion();
+            break;
         case 'singleAddition':
             generateSingleDigitAdditionQuestion();
             break;
@@ -15,6 +18,9 @@ function generateQuestion() {
             break;
         case 'subtraction':
             generateSubtractionQuestion();
+            break;
+        case 'doubleSubtraction':
+            generateDoubleSubtractionQuestion();
             break;
         case 'addition-comparison':
             generateAdditionComparisonQuestion();
@@ -70,15 +76,16 @@ function generateQuestion() {
         case 'percentageFraction':
             generatePercentageFractionQuestion();
             break;
-        case 'multiplication':
-            generateMultiplicationQuestion();
-            break;
         case 'tensAndUnitsPlaceMultiplication':
             generateTensAndUnitsPlaceMultiplicationQuestion();
             break;
         case 'simpleFraction':
             generateSimpleFractionQuestion();
             break;
+        case 'fraction':
+            generateFractionQuestion();
+            break;
+
     }
     // 업데이트된 정답을 hidden-answer 요소에 설정
     document.getElementById('hidden-answer').innerText = `정답: ${currentQuestion.answer}`;
@@ -99,6 +106,18 @@ function generateAdditionQuestion() {
     
 }
 
+function generateDoubleDigitAdditionQuestion() {
+    const maxSum = 99; // 최대 합 설정
+    let a = Math.floor(Math.random() * (maxSum + 1)); // 0부터 maxSum까지의 수
+    let b = Math.floor(Math.random() * (maxSum - a + 1)); // 0부터 (maxSum - a)까지의 수
+    currentQuestion = { a, b, answer: a + b};
+    document.getElementById('question').innerText = `${a} + ${b} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false; // 새 문제 생성 후 정답 플래그 초기화
+    
+}
+
 function generateSingleDigitAdditionQuestion() {
     const a = Math.floor(Math.random() * 9) + 1;
     const b = Math.floor(Math.random() * 9) + 1;
@@ -108,6 +127,16 @@ function generateSingleDigitAdditionQuestion() {
     document.getElementById('result').innerText = '';
     isCorrect = false; // 새 문제 생성 후 정답 플래그 초기화
     
+}
+
+function generateDoubleSubtractionQuestion() {
+    const a = Math.floor(Math.random() * 99)+1;
+    const b = Math.floor(Math.random() * (a+1));
+    currentQuestion = { a, b, answer: a - b};
+    document.getElementById('question').innerText = `${a} - ${b} = ?`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false; // 새 문제 생성 후 정답 플래그 초기화
 }
 
 function generateSubtractionQuestion() {
@@ -676,23 +705,23 @@ const multiplicationProblems = {
     100: ["5x20 10x10"]
 };
 
-function generateMultiplicationQuestion() {
-    const keys = Object.keys(multiplicationProblems);
-    const randomKey = keys[Math.floor(Math.random() * keys.length)];
-    const randomExpressions = multiplicationProblems[randomKey];
+// function generateMultiplicationQuestion() {
+//     const keys = Object.keys(multiplicationProblems);
+//     const randomKey = keys[Math.floor(Math.random() * keys.length)];
+//     const randomExpressions = multiplicationProblems[randomKey];
     
-    // Select a random expression if there are multiple options
-    const expression = randomExpressions[Math.floor(Math.random() * randomExpressions.length)];
+//     // Select a random expression if there are multiple options
+//     const expression = randomExpressions[Math.floor(Math.random() * randomExpressions.length)];
 
-    // Store the current question and answer
-    currentQuestion = { question: `${randomKey} = ?`, answer: expression };
+//     // Store the current question and answer
+//     currentQuestion = { question: `${randomKey} = ?`, answer: expression };
 
-    // Display the question
-    document.getElementById('question').innerText = `${randomKey}?`;
-    document.getElementById('answer').value = '';
-    document.getElementById('result').innerText = '';
-    isCorrect = false;
-}
+//     // Display the question
+//     document.getElementById('question').innerText = `${randomKey}?`;
+//     document.getElementById('answer').value = '';
+//     document.getElementById('result').innerText = '';
+//     isCorrect = false;
+// }
 
 function generateSimpleFractionQuestion() {
     let denominator;
@@ -757,15 +786,29 @@ function changeQuestionType(newType) {
     closeSidebar(); // 새로운 문제를 생성할 때 사이드바 닫기
 }
 
+function generateFractionQuestion() {
+    const numerator = Math.floor(Math.random() * 5000) + 1; // 1부터 5000 사이의 숫자
+    const denominator = Math.floor(Math.random() * 5000) + 1; // 1부터 5000 사이의 숫자
+
+    const percentage = (numerator / denominator) * 100;
+    currentQuestion = {
+        numerator: numerator,
+        denominator: denominator,
+        answer: percentage.toFixed(2) // 소수점 2자리까지
+    };
+
+    document.getElementById('question').innerText = `${numerator} / ${denominator} = ? %`;
+    document.getElementById('answer').value = '';
+    document.getElementById('result').innerText = '';
+    isCorrect = false; // 새 문제 생성 후 정답 플래그 초기화
+}
+
 function checkAnswer() {
     const userAnswer = document.getElementById('answer').value.trim().toLowerCase(); // 공백 제거
     const resultElement = document.getElementById('result');
     let isCorrect = false; // 정답 여부 초기화
 
     switch(questionType) {
-        case 'fractionToPercentage':
-            isCorrect = (parseFloat(userAnswer).toFixed(2) === currentQuestion.answer);
-            break;
         case 'addition-comparison':
         case 'subtractionComparison':
         case 'koreanMultiplication':
@@ -801,15 +844,25 @@ function checkAnswer() {
         case 'simpleFraction':
             isCorrect = (userAnswer === currentQuestion.answer);
             break;
+        case 'fraction':
+        case 'fractionToPercentage':
+            const correctAnswer = parseFloat(currentQuestion.answer);
+            const lowerBound = correctAnswer - 10;
+            const upperBound = correctAnswer + 10;
+            const userNumericAnswer = parseFloat(userAnswer);
+
+            // 사용자의 답이 올바른 범위 내에 있는지 확인
+            isCorrect = (userNumericAnswer >= lowerBound && userNumericAnswer <= upperBound);
+            break;
         default:
             isCorrect = (parseInt(userAnswer, 10) === currentQuestion.answer);
     }
 
     if (isCorrect) {
-        resultElement.innerText = '정답!';
+        resultElement.innerText = `${currentQuestion.answer}`;
         questionsAttempted++; // 정답일 경우에만 문제 푼 횟수 증가
         updateQuestionsAttemptedDisplay(); // 푼 횟수 화면 업데이트
-        setTimeout(generateQuestion, 1000); // 1초 후 새로운 문제 생성
+        setTimeout(generateQuestion, 3000); // 3초 후 새로운 문제 생성
     } else {
         resultElement.innerText = '틀렸습니다! 다시 시도해보세요.';
     }
@@ -825,6 +878,11 @@ function handleKeyPress(e) {
         checkAnswer();
     }
 }
+
+function nextQuestion() {
+    generateQuestion(); // 새로운 문제를 생성
+}
+
 
 //키패드
 function appendToAnswer(value) {
